@@ -40,3 +40,5 @@ jobs:
         publish: false
         tag: ${{ needs.image-tags.outputs.imageTags }}
         dockerfile_path: Dockerfile
+      steps:
+        - run: echo ${{ needs.image-tags.outputs.imageTags }}
