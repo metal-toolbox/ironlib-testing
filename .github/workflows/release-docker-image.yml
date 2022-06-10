@@ -21,12 +21,12 @@ jobs:
             # include git tag
             IMAGE_TAGS=$(echo "$GITHUB_REF" | awk -F'/' '{print $3}')
             # include branch name, commit sha
-            IMAGE_TAGS="${TAGS},${GITHUB_REF_NAME},${GITHUB_SHA}"
+            IMAGE_TAGS="${IMAGE_TAGS},${GITHUB_REF_NAME},${GITHUB_SHA}"
             if [[ "$GITHUB_REF" =~ ^refs/tags/v*.*.*-dev ]]; then
               # a development release does not include the 'latest' tag
-              echo -n "::set-output name=imageTags::${IMAGE_TAGS}"
+              echo -n "${IMAGE_TAGS}" >> TAGS.csv
             else
-              echo -n "::set-output name=imageTags::${IMAGE_TAGS},latest"
+              echo -n "${IMAGE_TAGS},latest" >> TAGS.csv
             fi
 
   build-publish-image:
@@ -36,5 +36,5 @@ jobs:
       uses: joelrebel/container-push/.github/workflows/container-push.yml@multiple-tags
       with:
         name: ironlib
-        tag: ${{ steps.releaseTag.outputs.imageTags }}
+        tag: $(cat TAGS.csv)
         dockerfile_path: Dockerfile
