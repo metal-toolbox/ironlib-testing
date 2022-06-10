@@ -30,7 +30,7 @@ jobs:
             fi
 
         - name: publish image
-          uses: github.com/joelrebel/container-push/.github/workflows/container-push.yml@multiple-tags
+          uses: joelrebel/container-push/.github/workflows/container-push.yml@main
           with:
             name: ironlib
             tag: ${{ steps.releaseTag.outputs.imageTags }}
