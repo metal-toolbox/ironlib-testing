@@ -9,8 +9,8 @@ on:
       - 'v*.*.*-dev'
 
 jobs:
-  publish-docker-images:
-      name: 🐳 Build and push docker images
+  image-tags:
+      name: 🐳 set image tags
       runs-on: ubuntu-20.04
       if: contains(github.ref, 'tags')
       steps:
@@ -29,9 +29,12 @@ jobs:
               echo -n "::set-output name=imageTags::${IMAGE_TAGS},latest"
             fi
 
-        - name: publish image
-          uses: joelrebel/container-push/.github/workflows/container-push.yml@main
-          with:
-            name: ironlib
-            tag: ${{ steps.releaseTag.outputs.imageTags }}
-            dockerfile_path: Dockerfile
+  build-publish-image:
+      name: 🐳 container-push
+      needs: image-tags
+      push: false
+      uses: joelrebel/container-push/.github/workflows/container-push.yml@multiple-tags
+      with:
+        name: ironlib
+        tag: ${{ steps.releaseTag.outputs.imageTags }}
+        dockerfile_path: Dockerfile
