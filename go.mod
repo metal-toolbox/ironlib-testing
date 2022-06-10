@@ -11,13 +11,14 @@ require (
 	github.com/stretchr/testify v1.7.2
 	github.com/tidwall/gjson v1.14.1
 	golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4
-	gotest.tools v2.2.0+incompatible
+	gotest.tools v1.4.0+incompatible
 )
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/google/go-cmp v0.5.5 // indirect
+	github.com/gotestyourself/gotestyourself v2.2.0+incompatible // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
