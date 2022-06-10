@@ -13,9 +13,11 @@ jobs:
       name: 🐳 set image tags
       runs-on: ubuntu-20.04
       if: contains(github.ref, 'tags')
+      outputs:
+        imageTags: ${{ steps.imageTags.value }}
       steps:
         - name: Set release tag variable
-          id: releaseTag
+          id: imageTags
           shell: bash
           run: |
             # include git tag
@@ -24,9 +26,9 @@ jobs:
             IMAGE_TAGS="${IMAGE_TAGS},${GITHUB_REF_NAME},${GITHUB_SHA}"
             if [[ "$GITHUB_REF" =~ ^refs/tags/v*.*.*-dev ]]; then
               # a development release does not include the 'latest' tag
-              echo -n "${IMAGE_TAGS}" >> TAGS.csv
+              echo -n "::set-output name=value::${IMAGE_TAGS}"
             else
-              echo -n "${IMAGE_TAGS},latest" >> TAGS.csv
+              echo -n "::set-output name=value::${IMAGE_TAGS},latest"
             fi
 
   build-publish-image:
@@ -36,5 +38,5 @@ jobs:
       with:
         name: ironlib
         publish: false
-        tag: $(cat TAGS.csv)
+        tag: ${{ needs.image-tags.outputs.imageTags }}
         dockerfile_path: Dockerfile
