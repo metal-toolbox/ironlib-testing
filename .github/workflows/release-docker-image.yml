@@ -31,6 +31,11 @@ jobs:
               echo -n "::set-output name=value::${IMAGE_TAGS},latest"
             fi
 
+  echo-stuff:
+    runs-on: ubuntu-latest
+    needs: image-tags
+    run: echo ">> ${{ needs.image-tags.outputs.imageTags }}"
+
   build-publish-image:
       name: 🐳 container-push
       needs: image-tags
@@ -40,5 +45,4 @@ jobs:
         publish: false
         tag: ${{ needs.image-tags.outputs.imageTags }}
         dockerfile_path: Dockerfile
-      steps:
-        - run: echo ${{ needs.image-tags.outputs.imageTags }}
+
