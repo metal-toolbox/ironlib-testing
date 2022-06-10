@@ -32,9 +32,9 @@ jobs:
   build-publish-image:
       name: 🐳 container-push
       needs: image-tags
-      publish: false
       uses: joelrebel/container-push/.github/workflows/container-push.yml@main
       with:
         name: ironlib
+        publish: false
         tag: $(cat TAGS.csv)
         dockerfile_path: Dockerfile
