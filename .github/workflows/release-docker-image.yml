@@ -14,7 +14,7 @@ jobs:
       runs-on: ubuntu-20.04
       if: contains(github.ref, 'tags')
       outputs:
-        imageTags: ${{ steps.imageTags.value }}
+        imageTags: ${{ steps.imageTags.outputs.value }}
       steps:
         - name: Set release tag variable
           id: imageTags
@@ -35,7 +35,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: image-tags
     steps:
-      - run: echo ">> ${{ needs.image-tags.outputs.imageTags }}"
+      steps.imageTags.outputs.value
+      - run: echo ${{ needs.image-tags.outputs.imageTags }}
 
   build-publish-image:
       name: 🐳 container-push
