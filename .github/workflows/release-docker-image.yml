@@ -33,7 +33,7 @@ jobs:
       name: 🐳 container-push
       needs: image-tags
       publish: false
-      uses: joelrebel/container-push/.github/workflows/container-push.yml@multiple-tags
+      uses: joelrebel/container-push/.github/workflows/container-push.yml@main
       with:
         name: ironlib
         tag: $(cat TAGS.csv)
