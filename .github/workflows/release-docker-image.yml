@@ -34,7 +34,8 @@ jobs:
   echo-stuff:
     runs-on: ubuntu-latest
     needs: image-tags
-    run: echo ">> ${{ needs.image-tags.outputs.imageTags }}"
+    steps:
+      - run: echo ">> ${{ needs.image-tags.outputs.imageTags }}"
 
   build-publish-image:
       name: 🐳 container-push
