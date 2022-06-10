@@ -36,5 +36,6 @@ jobs:
       uses: joelrebel/container-push/.github/workflows/container-push.yml@multiple-tags
       with:
         name: ironlib
+
         tag: $(cat TAGS.csv)
         dockerfile_path: Dockerfile
